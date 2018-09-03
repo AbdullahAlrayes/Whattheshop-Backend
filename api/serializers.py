@@ -71,8 +71,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
         new_user.save()
         return validated_data
 
-
-
 class UserListSerializer(serializers.ModelSerializer):
     profile = ProfileListSerializer()
     orders = serializers.SerializerMethodField()
@@ -83,7 +81,7 @@ class UserListSerializer(serializers.ModelSerializer):
         fields = ['id','first_name','last_name','username','email','is_superuser','is_staff','is_active','date_joined','last_login','profile', 'orders', 'products']
 
     def get_orders(self, obj):
-        orders = obj.order_set.all()
+        orders = obj.createdby.all()
         return UserOrderListSerializer(orders, many=True).data
 
     def get_products(self, obj):
@@ -126,9 +124,9 @@ class ProductListSerializer(serializers.ModelSerializer):
     tag =TagListSerializer(many=True)
     class Meta:
         model = Product
-        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by', 'order' ]
+        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by', 'order','price' ]
 
 class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by' ]
+        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by' ,'price']
