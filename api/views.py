@@ -17,6 +17,7 @@ from .serializers import (
     OrderStatusListSerializer,
     OrderTypeListSerializer,
     ProfileListSerializer,
+    TagListSerializer
     )
 from django.contrib.auth.models import User
 from .models import (
@@ -72,7 +73,6 @@ class ProfileDeleteView(DestroyAPIView):
     serializer_class = ProfileListSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'profile_id'
-
 
 # ==================== Products =====================#
 
@@ -177,3 +177,13 @@ class ProductStatusListView(ListAPIView):
 class ProductTypeListView(ListAPIView):
     queryset = ProductType.objects.all()
     serializer_class = ProductTypeListSerializer
+
+
+# ==================== Tags =====================#
+
+class TagCreateView(CreateAPIView):
+    serializer_class = TagListSerializer
+
+class TagListView(ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagListSerializer

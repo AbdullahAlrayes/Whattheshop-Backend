@@ -39,6 +39,10 @@ urlpatterns = [
     path('api/orders/delete/<int:order_id>/', views.OrderDeleteView.as_view(), name='api-order-delete'),
     path('api/orders-status/list/', views.OrderStatusListView.as_view(), name='api-order-status-list'),
     path('api/orders-types/list/', views.OrderTypeListView.as_view(), name='api-order-type-list'),
+
+    path('api/tags/create/', views.TagCreateView.as_view(), name='api-tag-create'),
+    path('api/tags/list/', views.TagListView.as_view(), name='api-tag-list'),
+
 ]
 
 
