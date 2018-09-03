@@ -122,10 +122,11 @@ class ProductListSerializer(serializers.ModelSerializer):
     created_by = CommonUserListSerializer()
     type= ProductTypeListSerializer()
     status = ProductStatusListSerializer()
+    order = OrderListSerializer()
     tag =TagListSerializer(many=True)
     class Meta:
         model = Product
-        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by' ]
+        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by', 'order' ]
 
 class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:

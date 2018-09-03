@@ -15,6 +15,30 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+# ================================ Orders =======================#
+
+class OrderStatus(models.Model):
+    name = models.CharField(max_length=225)
+
+    def __str__(self):
+        return self.name
+
+class OrderType(models.Model):
+    name = models.CharField(max_length=225)
+
+    def __str__(self):
+        return self.name
+
+class Order(models.Model):
+    status          = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
+    created_by      = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_on      = models.DateTimeField(auto_now_add = True)
+    updated_on      = models.DateTimeField(auto_now = True)
+    price           = models.FloatField(default=0)
+
+    def __str__(self):
+        return str(self.id)
+
 
 # ================================ Products =======================#
 class ProductType(models.Model):
@@ -40,31 +64,7 @@ class Product(models.Model):
     created_on      = models.DateTimeField(auto_now_add = True)
     updated_on      = models.DateTimeField(auto_now = True)
     pic             = models.ImageField(blank=True, null=True)
+    order          = models.ForeignKey(Order, on_delete=models.CASCADE, null=True,blank=True)
 
     def __str__(self):
         return self.name
-
-
-# ================================ Orders =======================#
-
-class OrderStatus(models.Model):
-    name = models.CharField(max_length=225)
-
-    def __str__(self):
-        return self.name
-
-class OrderType(models.Model):
-    name = models.CharField(max_length=225)
-
-    def __str__(self):
-        return self.name
-
-class Order(models.Model):
-    status          = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
-    created_by      = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_on      = models.DateTimeField(auto_now_add = True)
-    updated_on      = models.DateTimeField(auto_now = True)
-    price           = models.FloatField(default=0)
-
-    def __str__(self):
-        return str(self.id)
