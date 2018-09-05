@@ -65,7 +65,8 @@ class Product(models.Model):
     created_on      = models.DateTimeField(auto_now_add = True)
     updated_on      = models.DateTimeField(auto_now = True)
     pic             = models.ImageField(blank=True, null=True)
-    order          = models.ForeignKey(Order, on_delete=models.CASCADE, null=True,blank=True)
+    order           = models.ForeignKey(Order, on_delete=models.CASCADE, null=True,blank=True)
+    quantity        = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name

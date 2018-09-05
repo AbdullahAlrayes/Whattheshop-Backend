@@ -102,12 +102,23 @@ class CommonUserListSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id','first_name','last_name','username','email','is_superuser','is_staff','is_active','date_joined','last_login','profile']
 
+class OrderProductIDsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id']
+
 class OrderListSerializer(serializers.ModelSerializer):
     created_by = CommonUserListSerializer()
     status = OrderStatusListSerializer()
+    products = serializers.SerializerMethodField()
+
     class Meta:
         model = Order
-        fields = ['id','created_on','updated_on','status','price', 'created_by' ]
+        fields = ['id','created_on','updated_on','status','price', 'created_by', 'products' ]
+
+    def get_products(self, obj):
+        products = obj.product_set.all()
+        return OrderProductIDsListSerializer(products, many=True).data
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     class Meta:

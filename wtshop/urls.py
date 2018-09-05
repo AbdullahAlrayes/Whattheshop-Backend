@@ -17,7 +17,6 @@ urlpatterns = [
     path('api/users/delete/<int:user_id>/', views.UserDeleteView.as_view(), name='api-user-delete'),
 
 
-
     path('api/profiles/create/', views.ProfileCreateAPIView.as_view(), name='api-profile-create'),
     path('api/profiles/update/<int:profile_id>/', views.ProfileUpdateView.as_view(), name='api-profile-create'),
     path('api/profiles/delete/<int:profile_id>/', views.ProfileDeleteView.as_view(), name='api-profile-delete'),
@@ -39,6 +38,7 @@ urlpatterns = [
     path('api/orders/delete/<int:order_id>/', views.OrderDeleteView.as_view(), name='api-order-delete'),
     path('api/orders-status/list/', views.OrderStatusListView.as_view(), name='api-order-status-list'),
     path('api/orders-types/list/', views.OrderTypeListView.as_view(), name='api-order-type-list'),
+
 
     path('api/tags/create/', views.TagCreateView.as_view(), name='api-tag-create'),
     path('api/tags/list/', views.TagListView.as_view(), name='api-tag-list'),
