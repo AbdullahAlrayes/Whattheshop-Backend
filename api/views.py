@@ -17,7 +17,8 @@ from .serializers import (
     OrderStatusListSerializer,
     OrderTypeListSerializer,
     ProfileListSerializer,
-    TagListSerializer
+    TagListSerializer,
+    OrderSerialNoListSerializer
     )
 from django.contrib.auth.models import User
 from .models import (
@@ -28,7 +29,8 @@ from .models import (
     OrderStatus,
     OrderType,
     Tag,
-    Profile
+    Profile,
+    OrderSerialNo
     )
 
 # ==================== Users =====================#
@@ -185,5 +187,12 @@ class TagCreateView(CreateAPIView):
     serializer_class = TagListSerializer
 
 class TagListView(ListAPIView):
-    queryset = Tag.objects.all()
+    queryset = OrderSerialNo.objects.all()
     serializer_class = TagListSerializer
+
+class OrderSerialNoCreateView(CreateAPIView):
+    serializer_class = OrderSerialNoListSerializer
+
+class OrderSerialNoListView(ListAPIView):
+    queryset = OrderSerialNo.objects.all()
+    serializer_class = OrderSerialNoListSerializer

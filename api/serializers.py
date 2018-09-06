@@ -23,6 +23,10 @@ class TagListSerializer(serializers.ModelSerializer):
         model = Tag
         fields = '__all__'
 
+class OrderSerialNoListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = '__all__'
 # ================================ ProductsType & Status =====================#
 
 class ProductTypeListSerializer(serializers.ModelSerializer):
@@ -47,9 +51,11 @@ class UserProductListSerializer(serializers.ModelSerializer):
     type= ProductTypeListSerializer()
     status = ProductStatusListSerializer()
     tag =TagListSerializer(many=True)
+    orderSerialNo = OrderSerialNoListSerializer(many=True)
+
     class Meta:
         model = Product
-        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag' ]
+        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag','quantity' ,'orderSerialNo']
 
 class UserOrderListSerializer(serializers.ModelSerializer):
     status = OrderStatusListSerializer()
@@ -105,7 +111,7 @@ class CommonUserListSerializer(serializers.ModelSerializer):
 class OrderProductIDsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id']
+        fields = ['id','quantity']
 
 class OrderListSerializer(serializers.ModelSerializer):
     created_by = CommonUserListSerializer()
@@ -133,11 +139,13 @@ class ProductListSerializer(serializers.ModelSerializer):
     status = ProductStatusListSerializer()
     order = OrderListSerializer()
     tag =TagListSerializer(many=True)
+    orderSerialNo = OrderSerialNoListSerializer(many=True)
+
     class Meta:
         model = Product
-        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by', 'order','price' ]
+        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by', 'order','price', 'quantity','orderSerialNo']
 
 class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by' ,'price']
+        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by' ,'price','orderSerialNo']

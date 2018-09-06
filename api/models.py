@@ -13,6 +13,15 @@ class Profile(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=225)
 
+    class Meta:
+        ordering = ['name',]
+
+    def __str__(self):
+        return self.name
+
+class OrderSerialNo(models.Model):
+    name = models.CharField(max_length=225)
+
     def __str__(self):
         return self.name
 # ================================ Orders =======================#
@@ -40,7 +49,6 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
 
-
 # ================================ Products =======================#
 class ProductType(models.Model):
     name = models.CharField(max_length=225)
@@ -60,6 +68,7 @@ class Product(models.Model):
     status          = models.ForeignKey(ProductStatus, on_delete=models.CASCADE)
     type            = models.ForeignKey(ProductType, on_delete=models.CASCADE)
     tag             = models.ManyToManyField(Tag, blank=True)
+    orderSerialNo   = models.ManyToManyField(OrderSerialNo, blank=True)
     price           = models.FloatField(default=0)
     created_by      = models.ForeignKey(User, on_delete=models.CASCADE)
     created_on      = models.DateTimeField(auto_now_add = True)
@@ -70,3 +79,5 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+# ================================ Products =======================#

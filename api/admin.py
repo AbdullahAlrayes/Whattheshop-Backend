@@ -7,7 +7,8 @@ from .models import (
     OrderStatus,
     OrderType,
     Tag,
-    Profile
+    Profile,
+    OrderSerialNo
     )
 
 admin.site.register(Profile)
@@ -18,3 +19,4 @@ admin.site.register(Product)
 admin.site.register(ProductType)
 admin.site.register(ProductStatus)
 admin.site.register(Tag)
+admin.site.register(OrderSerialNo)
