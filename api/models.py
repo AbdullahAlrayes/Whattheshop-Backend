@@ -45,6 +45,8 @@ class Order(models.Model):
     created_on      = models.DateTimeField(auto_now_add = True)
     updated_on      = models.DateTimeField(auto_now = True)
     price           = models.FloatField(default=0)
+    orderSerialNo   = models.ManyToManyField(OrderSerialNo, blank=True)
+
 
     def __str__(self):
         return str(self.id)
@@ -68,7 +70,6 @@ class Product(models.Model):
     status          = models.ForeignKey(ProductStatus, on_delete=models.CASCADE)
     type            = models.ForeignKey(ProductType, on_delete=models.CASCADE)
     tag             = models.ManyToManyField(Tag, blank=True)
-    orderSerialNo   = models.ManyToManyField(OrderSerialNo, blank=True)
     price           = models.FloatField(default=0)
     created_by      = models.ForeignKey(User, on_delete=models.CASCADE)
     created_on      = models.DateTimeField(auto_now_add = True)

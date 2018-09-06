@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import (Profile, ProductStatus, ProductType, Product, OrderStatus, OrderType, Order, Tag)
+from .models import (Profile, ProductStatus, ProductType, Product, OrderStatus, OrderType, Order, Tag, OrderSerialNo)
 
 
 
@@ -25,7 +25,7 @@ class TagListSerializer(serializers.ModelSerializer):
 
 class OrderSerialNoListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tag
+        model = OrderSerialNo
         fields = '__all__'
 # ================================ ProductsType & Status =====================#
 
@@ -51,11 +51,11 @@ class UserProductListSerializer(serializers.ModelSerializer):
     type= ProductTypeListSerializer()
     status = ProductStatusListSerializer()
     tag =TagListSerializer(many=True)
-    orderSerialNo = OrderSerialNoListSerializer(many=True)
+
 
     class Meta:
         model = Product
-        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag','quantity' ,'orderSerialNo']
+        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag','quantity' ]
 
 class UserOrderListSerializer(serializers.ModelSerializer):
     status = OrderStatusListSerializer()
@@ -117,10 +117,11 @@ class OrderListSerializer(serializers.ModelSerializer):
     created_by = CommonUserListSerializer()
     status = OrderStatusListSerializer()
     products = serializers.SerializerMethodField()
+    orderSerialNo = OrderSerialNoListSerializer(many=True)
 
     class Meta:
         model = Order
-        fields = ['id','created_on','updated_on','status','price', 'created_by', 'products' ]
+        fields = ['id','created_on','updated_on','status','price', 'created_by', 'products' , 'orderSerialNo' ]
 
     def get_products(self, obj):
         products = obj.product_set.all()
@@ -129,7 +130,7 @@ class OrderListSerializer(serializers.ModelSerializer):
 class OrderCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['id','created_on','updated_on','price','status', 'created_by',  ]
+        fields = ['id','created_on','updated_on','price','status', 'created_by', 'orderSerialNo' ]
 
 # ================================ Product =====================================#
 
@@ -139,13 +140,12 @@ class ProductListSerializer(serializers.ModelSerializer):
     status = ProductStatusListSerializer()
     order = OrderListSerializer()
     tag =TagListSerializer(many=True)
-    orderSerialNo = OrderSerialNoListSerializer(many=True)
 
     class Meta:
         model = Product
-        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by', 'order','price', 'quantity','orderSerialNo']
+        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by', 'order','price', 'quantity']
 
 class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by' ,'price','orderSerialNo']
+        fields = ['id','name','description','created_on','updated_on','pic','type','status','tag', 'created_by' ,'price']
