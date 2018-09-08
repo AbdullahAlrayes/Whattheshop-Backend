@@ -40,6 +40,10 @@ urlpatterns = [
     path('tags/create/', views.TagCreateView.as_view(), name='api-tag-create'),
     path('tags/list/', views.TagListView.as_view(), name='api-tag-list'),
 
+    path('middleman/create/', views.MiddlemanCreateView.as_view(), name='api-middleman-create'),
+    path('middleman/update/<int:middleman_id>/', views.MiddlemanUpdateView.as_view(), name='api-middleman-update'),
+    path('middleman/delete/<int:middleman_id>/', views.MiddlemanDeleteView.as_view(), name='api-middleman-delete'),
+
     path('order-serial-no/create/', views.OrderSerialNoCreateView.as_view(), name='api-order-serial-no-create'),
     path('order-serial-no/list/', views.OrderSerialNoListView.as_view(), name='api-order-serial-no-list'),
 ]

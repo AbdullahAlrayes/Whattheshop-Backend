@@ -8,7 +8,8 @@ from .models import (
     OrderType,
     Tag,
     Profile,
-    OrderSerialNo
+    OrderSerialNo,
+    Middleman
     )
 
 admin.site.register(Profile)
@@ -20,3 +21,4 @@ admin.site.register(ProductType)
 admin.site.register(ProductStatus)
 admin.site.register(Tag)
 admin.site.register(OrderSerialNo)
+admin.site.register(Middleman)

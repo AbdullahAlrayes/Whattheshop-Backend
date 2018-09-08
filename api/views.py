@@ -18,7 +18,8 @@ from .serializers import (
     OrderTypeListSerializer,
     ProfileListSerializer,
     TagListSerializer,
-    OrderSerialNoListSerializer
+    OrderSerialNoListSerializer,
+    MiddlemanCreateSerializer
     )
 from django.contrib.auth.models import User
 from .models import (
@@ -30,7 +31,8 @@ from .models import (
     OrderType,
     Tag,
     Profile,
-    OrderSerialNo
+    OrderSerialNo,
+    Middleman
     )
 
 # ==================== Users =====================#
@@ -196,3 +198,20 @@ class OrderSerialNoCreateView(CreateAPIView):
 class OrderSerialNoListView(ListAPIView):
     queryset = OrderSerialNo.objects.all()
     serializer_class = OrderSerialNoListSerializer
+
+# ==================== Middleman =====================#
+
+class MiddlemanCreateView(CreateAPIView):
+    serializer_class = MiddlemanCreateSerializer
+
+class MiddlemanUpdateView(RetrieveUpdateAPIView):
+    queryset = Middleman.objects.all()
+    serializer_class = MiddlemanCreateSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'middleman_id'
+
+class MiddlemanDeleteView(DestroyAPIView):
+    queryset = Middleman.objects.all()
+    serializer_class = MiddlemanCreateSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'middleman_id'

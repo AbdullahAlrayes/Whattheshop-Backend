@@ -75,10 +75,17 @@ class Product(models.Model):
     created_on      = models.DateTimeField(auto_now_add = True)
     updated_on      = models.DateTimeField(auto_now = True)
     pic             = models.ImageField(blank=True, null=True)
-    order           = models.ForeignKey(Order, on_delete=models.CASCADE, null=True,blank=True)
-    quantity        = models.IntegerField(default=0)
+    order           = models.ManyToManyField(Order, through='Middleman')
 
     def __str__(self):
         return self.name
 
-# ================================ Products =======================#
+# ================================ MiddleMan =======================#
+
+class Middleman(models.Model):
+    order      = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product    = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity   = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.order.id) + "_" + self.product.name

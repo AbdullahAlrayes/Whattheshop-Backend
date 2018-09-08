@@ -1,7 +1,18 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import (Profile, ProductStatus, ProductType, Product, OrderStatus, OrderType, Order, Tag, OrderSerialNo)
+from .models import (
+    Profile,
+    ProductStatus,
+    ProductType,
+    Product,
+    OrderStatus,
+    OrderType,
+    Order,
+    Tag,
+    OrderSerialNo,
+    Middleman
+    )
 
 
 
@@ -99,6 +110,25 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id','first_name','last_name','username','email','is_superuser','is_staff','is_active']
 
+# ================================ Middleman =====================================#
+
+class ProductMiddlemanListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id','name']
+
+class MiddlemanListSerializer(serializers.ModelSerializer):
+    product = ProductMiddlemanListSerializer()
+
+    class Meta:
+        model = Middleman
+        fields = ['product','quantity']
+
+class MiddlemanCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Middleman
+        fields = ['order','product','quantity']
+
 # ================================ Orders =====================================#
 
 class CommonUserListSerializer(serializers.ModelSerializer):
@@ -116,16 +146,15 @@ class OrderProductIDsListSerializer(serializers.ModelSerializer):
 class OrderListSerializer(serializers.ModelSerializer):
     created_by = CommonUserListSerializer()
     status = OrderStatusListSerializer()
-    products = serializers.SerializerMethodField()
-    orderSerialNo = OrderSerialNoListSerializer(many=True)
+    middleman = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
-        fields = ['id','created_on','updated_on','status','price', 'created_by', 'products' , 'orderSerialNo' ]
+        fields = ['id','created_on','updated_on','status','price', 'created_by' , 'middleman' ]
 
-    def get_products(self, obj):
-        products = obj.product_set.all()
-        return OrderProductIDsListSerializer(products, many=True).data
+    def get_middleman(self, obj):
+        middleman = obj.middleman_set.all()
+        return MiddlemanListSerializer(middleman, many=True).data
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     class Meta:
