@@ -187,7 +187,7 @@ class TagCreateView(CreateAPIView):
     serializer_class = TagListSerializer
 
 class TagListView(ListAPIView):
-    queryset = OrderSerialNo.objects.all()
+    queryset = Tag.objects.all()
     serializer_class = TagListSerializer
 
 class OrderSerialNoCreateView(CreateAPIView):
